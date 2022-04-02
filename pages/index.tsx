@@ -12,7 +12,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
                 <meta httpEquiv="Permissions-Policy" content="interest-cohort=()" />
             </Head>
-            123
+            <h1>Hello</h1>
         </div>
     )
 
