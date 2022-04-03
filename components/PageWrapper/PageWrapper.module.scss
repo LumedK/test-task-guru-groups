@@ -1,0 +1,9 @@
+.page-wrapper {
+    margin: 25px auto 37px auto;
+    max-width: 968px;
+}
+@media screen and (max-width: 1024px) {
+    .page-wrapper {
+        margin: 0 24px;
+    }
+}

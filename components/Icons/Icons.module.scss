@@ -1,0 +1,9 @@
+@import '../../styles/variables.scss';
+.icon {
+    path {
+        fill: white;
+    }
+    &:hover path {
+        fill: $app-color;
+    }
+}
