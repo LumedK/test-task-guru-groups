@@ -26,7 +26,7 @@ const Slides = ({ slides, indexes }: Params) => {
                     ].join(' ')}
                     key={index}
                 >
-                    <Image src={url} layout="fill" alt="card image" />
+                    <Image src={url} layout="fill" alt="card image" unoptimized={true} />
                 </div>
             ))}
         </Fragment>
