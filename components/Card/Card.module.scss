@@ -1,4 +1,4 @@
-.proposal-card {
+.card {
     position: relative;
 
     box-sizing: content-box;
@@ -11,27 +11,17 @@
     .img-holder {
         position: relative;
         height: 260px;
-        background-color: #599fa1;
+        background-color: #d1d1d1;
         border-top-left-radius: inherit;
         border-top-right-radius: inherit;
-        overflow: hidden;
-
-        img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            height: 250%;
-            width: auto;
-
-            transform: translate(-50%, -50%);
-        }
 
         .img-icon-holder {
             position: absolute;
             display: flex;
             flex-flow: column nowrap;
             justify-content: flex-end;
-            height: 100%;
+            z-index: 10;
+
             right: 14px;
             bottom: 36px;
             margin-top: 16px;

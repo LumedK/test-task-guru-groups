@@ -1,36 +1,31 @@
 import { NextPage } from 'next'
-import React, { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import style from './Carousel.module.scss'
+import Slider from './Slider'
+import Slides from './Slides'
 
 interface Props {
-    images: React.ReactNode[]
-    id: string
+    imageUrls: string[] | undefined
 }
 
-const Carousel: NextPage<Props> = ({ images, id }) => {
-    const [currentIndex, setCurrentIndex] = useState(0)
+export interface Indexes {
+    prev: number
+    cur: number
+}
 
-    const sliderJSX: any = []
+const Carousel: NextPage<Props> = ({ imageUrls = [] }) => {
+    const [indexes, setIndexes] = useState<Indexes>({ prev: 0, cur: 0 })
 
     return (
         <div className={style.carousel}>
-            {images.map((child, index) => {
-                const key = id + ':' + index.toString()
-                const isCurrent = index === currentIndex
-                sliderJSX.push(
-                    <div
-                        className={`${style.slide} ${isCurrent ? style.active : ''}`}
-                        key={key}
-                        onClick={() => {
-                            setCurrentIndex(index)
-                        }}
-                    />
-                )
-                return isCurrent ? child : <React.Fragment key={key} />
-            })}
-            <div className={style.slider}>{sliderJSX}</div>
+            <Slider
+                items={imageUrls.map((el, i) => i === indexes.cur)}
+                indexes={indexes}
+                handler={setIndexes}
+            />
+            <Slides slides={imageUrls} indexes={indexes} />
         </div>
     )
 }
 
-export default React.memo(Carousel)
+export default Carousel

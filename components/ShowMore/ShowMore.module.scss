@@ -1,11 +1,7 @@
 @import '../../styles/variables.scss';
 
 .show-more {
-    display: flex;
-    justify-content: flex-end;
-
     cursor: pointer;
-
     color: $app-color;
     font-size: 14px;
     .show-more-img {

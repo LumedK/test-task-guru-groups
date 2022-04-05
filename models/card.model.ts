@@ -6,4 +6,5 @@ export interface Card {
     seen: boolean
     locality: string
     date: number
+    images?: string[]
 }

@@ -4,41 +4,47 @@
     margin: 25px auto 8px 32px;
 }
 
-.proposal-cardholder {
+.cardholder {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 24px;
     justify-items: center;
 
-    .item-wrapper {
+    & > div {
         box-sizing: content-box;
         margin-bottom: 24px;
         width: 100%;
         min-width: 224px;
     }
+    .row {
+        grid-column: 1 / -1;
+    }
 }
-
-.loader {
+.show-more-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+.loader-wrapper {
     display: flex;
     justify-content: center;
 }
-.last-column {
-    grid-column: 1/5;
+.hide {
+    display: none;
 }
 
 @media screen and (max-width: 1024px) {
-    .proposal-cardholder {
+    .cardholder {
         grid-template-columns: repeat(3, 1fr);
         margin: 0 24px;
     }
 }
 @media screen and (max-width: 760px) {
-    .proposal-cardholder {
+    .cardholder {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 @media screen and (max-width: 540px) {
-    .proposal-cardholder {
+    .cardholder {
         grid-template-columns: repeat(1, 1fr);
     }
 }

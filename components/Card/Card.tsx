@@ -1,15 +1,13 @@
-import axios from 'axios'
 import { NextPage } from 'next'
-import Image from 'next/image'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { generateUrlImage } from '../../api/images.api'
 import { Card } from '../../models/card.model'
 import Carousel from '../Carousel/Carousel'
 import IconCompare from '../Icons/IconCompare'
 import IconDeal from '../Icons/IconDeal'
 import IconDelivery from '../Icons/IconDelivery'
 import IconFavourite from '../Icons/IconFavourite'
-import RandomImg from '../RandomImg'
-import style from './ProposalCard.module.scss'
+import style from './Card.module.scss'
 
 interface Props {
     card: Card
@@ -23,36 +21,27 @@ const dateFormat = new Intl.DateTimeFormat('ru', {
     minute: 'numeric'
 })
 
-const urlImageCache = new Map()
-const generateUrlImage = async (key: string) => {
-    if (!urlImageCache.has(key)) {
-        const res = await axios.get(`https://source.unsplash.com/random/${key}`)
-        const url = (res.request.responseURL || '').replace(/&w=1080/, '&w=500')
-        urlImageCache.set(key, url)
-    }
-    return urlImageCache.get(key)
-}
-
-const ProposalCard: NextPage<Props> = ({ card }) => {
+const Card: NextPage<Props> = ({ card }) => {
     const styleSeen = card.seen ? 'card-seen' : ''
 
-    const [images, setImages] = useState<React.ReactNode[]>([])
-    const createRandomImage = useCallback(async () => {
-        const newImages = []
+    const [ImageUrls, setImageUrls] = useState<string[]>([])
+
+    const addImages = useCallback(async () => {
+        const images: Set<string> = new Set()
         for (let i = 0; i < 4; i++) {
-            const url = await generateUrlImage(card.id + ':' + i)
-            newImages.push(<RandomImg key={url} url={url} />)
+            images.add(await generateUrlImage(card.id, i))
         }
-        setImages(newImages)
+        setImageUrls(Array.from(images))
     }, [card.id])
+
     useEffect(() => {
-        createRandomImage()
-    }, [createRandomImage])
+        addImages()
+    }, [addImages])
 
     return (
-        <div className={`${style['proposal-card']} ${style[styleSeen]}`}>
+        <div className={`${style['card']} ${style[styleSeen]}`}>
             <div className={style['img-holder']}>
-                <Carousel images={images} id={card.id} />
+                <Carousel imageUrls={ImageUrls} />
 
                 <div className={style['img-icon-holder']}>
                     <IconFavourite />
@@ -84,4 +73,4 @@ const ProposalCard: NextPage<Props> = ({ card }) => {
     )
 }
 
-export default React.memo(ProposalCard)
+export default React.memo(Card)

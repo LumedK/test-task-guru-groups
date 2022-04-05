@@ -1,0 +1,36 @@
+.slide {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.current {
+    z-index: 2;
+}
+.next-slide {
+    animation: next-slide-animation 0.7s;
+}
+.prev-slide {
+    animation: prev-slide-animation 0.7s;
+}
+
+.previous {
+    z-index: 1;
+}
+@keyframes next-slide-animation {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0%;
+    }
+}
+
+@keyframes prev-slide-animation {
+    0% {
+        right: 100%;
+    }
+    100% {
+        right: 0%;
+    }
+}
