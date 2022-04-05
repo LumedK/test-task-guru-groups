@@ -13,9 +13,11 @@
 .prev-slide {
     animation: prev-slide-animation 0.7s;
 }
-
 .previous {
     z-index: 1;
+}
+.hide {
+    display: none;
 }
 @keyframes next-slide-animation {
     from {

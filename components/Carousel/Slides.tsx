@@ -11,24 +11,35 @@ interface Params {
 const Slides = ({ slides, indexes }: Params) => {
     return (
         <Fragment>
-            {slides.map((url, index) => (
-                <div
-                    className={[
-                        style.slide,
-                        index === indexes.cur ? style.current : '',
-                        index === indexes.prev ? style.previous : '',
-                        index === indexes.cur && indexes.cur > indexes.prev
-                            ? style['next-slide']
-                            : '',
-                        index === indexes.cur && indexes.cur < indexes.prev
-                            ? style['prev-slide']
-                            : ''
-                    ].join(' ')}
-                    key={index}
-                >
-                    <Image src={url} layout="fill" alt="card image" unoptimized={true} />
-                </div>
-            ))}
+            {slides.map((url, index) => {
+                const isCurrent = index === indexes.cur
+                const isPrevious = index === indexes.prev
+                const useNextAnimation = isCurrent && indexes.cur > indexes.prev
+                const usePrevAnimation = isCurrent && indexes.cur < indexes.prev
+                const hideImage = !isCurrent && !isPrevious
+
+                return (
+                    <div
+                        className={[
+                            style.slide,
+                            isCurrent ? style.current : '',
+                            isPrevious ? style.previous : '',
+                            useNextAnimation ? style['next-slide'] : '',
+                            usePrevAnimation ? style['prev-slide'] : '',
+                            hideImage ? style.hide : ''
+                        ].join(' ')}
+                        key={index}
+                    >
+                        <Image
+                            src={url}
+                            layout="fill"
+                            alt="card image"
+                            unoptimized={true}
+                            hidden={hideImage}
+                        />
+                    </div>
+                )
+            })}
         </Fragment>
     )
 }
