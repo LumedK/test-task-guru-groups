@@ -8,7 +8,9 @@ export const generateUrlImage = async (id: string, index: number) => {
 
     if (!photos[index]) {
         const res = await axios.get(`https://source.unsplash.com/random/${id}_${index}`)
-        const url = (res.request.responseURL || '').replace(/&w=1080/, '&w=380')
+        const url = (res.request.responseURL || '')
+            .replace(/&w=1080/, '&w=380')
+            .replace(/imwidth=1080/, 'imwidth=380')
         photos[index] = url
     }
 

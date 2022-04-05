@@ -3,7 +3,8 @@
     path {
         fill: white;
     }
-    &:hover path {
+    &:hover path,
+    &:active path {
         fill: $app-color;
     }
 }
