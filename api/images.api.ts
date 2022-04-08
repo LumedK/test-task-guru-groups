@@ -1,18 +1,11 @@
 import axios from 'axios'
 
-const urlImageCache: Map<string, string[]> = new Map()
-
-export const generateUrlImage = async (id: string, index: number) => {
-    const photos = urlImageCache.get(id) || []
-    urlImageCache.set(id, photos)
-
-    if (!photos[index]) {
-        const res = await axios.get(`https://source.unsplash.com/random/${id}_${index}`)
-        const url = (res.request.responseURL || '')
-            .replace(/&w=1080/, '&w=380')
-            .replace(/imwidth=1080/, 'imwidth=380')
-        photos[index] = url
-    }
-
-    return photos[index]
+export const generateUrlImageCollection = async (id: string, length: number) => {
+    const width = 400
+    const height = 400
+    const res = await axios.get(`https://picsum.photos/v2/list?page=${id}&limit=${length}`)
+    const photos = res.data.map((item: { download_url: string }) =>
+        item.download_url.replace(/\d*\/\d*$/, `${width}/${height}`)
+    )
+    return photos
 }

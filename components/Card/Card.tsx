@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { generateUrlImage } from '../../api/images.api'
+import React from 'react'
+import { useImageUrls } from '../../hooks/useImageUrls'
 import { Card } from '../../models/card.model'
 import Carousel from '../Carousel/Carousel'
 import IconCompare from '../Icons/IconCompare'
@@ -24,19 +24,8 @@ const dateFormat = new Intl.DateTimeFormat('ru', {
 const Card: NextPage<Props> = ({ card }) => {
     const styleSeen = card.seen ? 'card-seen' : ''
 
-    const [ImageUrls, setImageUrls] = useState<string[]>([])
-
-    const addImages = useCallback(async () => {
-        const images: Set<string> = new Set()
-        for (let i = 0; i < 4; i++) {
-            images.add(await generateUrlImage(card.id, i))
-        }
-        setImageUrls(Array.from(images))
-    }, [card.id])
-
-    useEffect(() => {
-        addImages()
-    }, [addImages])
+    const numberOfImages = 4
+    const ImageUrls = useImageUrls(card.id, numberOfImages)
 
     return (
         <div className={`${style['card']} ${style[styleSeen]}`}>
